@@ -119,6 +119,9 @@
       gap: 50px;
       margin: 60px 0;
       position: relative;
+      background-image: url('https://www.wedby.me/uploads/ckeditor/pictures/576/content_image1.jpg');
+      background-size: contain;
+      background-repeat: no-repeat;
     }
     
     .couple-photo-frame {
@@ -133,43 +136,22 @@
       background-position: center;
     }
     
-    .couple-photo-frame::before {
-      content: "";
-      position: absolute;
-      top: -10px;
-      left: -10px;
-      right: -10px;
-      bottom: -10px;
-      border: 1px solid #b4944a;
-      z-index: 2;
-    }
-    
-    .groom-frame {
-      background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964');
-      transform: rotate(-3deg);
-    }
-    
-    .bride-frame {
-      background-image: url('https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=1964');
-      transform: rotate(3deg);
-    }
     
     .couple-photo-frame:hover {
       transform: rotate(0deg) scale(1.05);
     }
     
     .couple-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
+      font-family: 'Great Vibes', cursive;
+      font-size: 14.2rem;
       color: #5d4738;
-      margin-top: 25px;
       font-weight: 500;
       letter-spacing: 1px;
     }
     
     .heart-divider {
       font-size: 3.5rem;
-      color: #b4944a;
+      color: #ff005d;
       position: relative;
       animation: heartbeat 1.5s infinite;
     }
@@ -668,7 +650,7 @@
       .subtitle::after { right: -30px; }
       .couple-section { flex-direction: column; gap: 40px; }
       .couple-photo-frame { width: 200px; height: 280px; }
-      .couple-name { font-size: 2rem; }
+      .couple-name { font-size: 21rem; }
       .detail-box { min-width: 150px; padding: 20px 15px; }
       .countdown-item { min-width: 100px; padding: 20px 15px; }
       .countdown-number { font-size: 2.2rem; }
@@ -688,7 +670,7 @@
       .subtitle::after { right: -20px; }
       .couple-section { margin: 40px 0; }
       .couple-photo-frame { width: 170px; height: 240px; }
-      .couple-name { font-size: 1.8rem; }
+      .couple-name { font-size: 3.8rem; }
       .heart-divider { font-size: 2.5rem; }
       .detail-box { min-width: 100%; }
       .countdown-item { min-width: 80px; padding: 15px 10px; }
@@ -726,15 +708,11 @@
     </div>
     
     <div class="couple-section">
-      <div class="couple">
         <h2 class="couple-name">Ерасыл</h2>
-      </div>
       
       <div class="heart-divider">♥</div>
       
-      <div class="couple">
         <h2 class="couple-name">Айдана</h2>
-      </div>
     </div>
     
     <div class="invitation-card">
