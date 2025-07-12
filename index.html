@@ -230,40 +230,21 @@
   <script>
     // Музыкальный плеер
     const musicPlayer = document.getElementById('musicPlayer');
-  const weddingMusic = document.getElementById('weddingMusic');
-  let isPlaying = false;
-
-  // Скрываем оверлей и запускаем музыку
-  function hideIntro() {
-    // 1) прячем оверлей
-    document.getElementById('introOverlay').style.display = 'none';
-
-    // 2) пытаемся запустить музыку
-    weddingMusic.play()
-      .then(() => {
-        // Если успешно — обновляем иконку
-        isPlaying = true;
-        musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
-      })
-      .catch(e => {
-        // Если автоплей заблокирован — просто поставим иконку Play
-        console.warn('Автовоспроизведение заблокировано');
-        isPlaying = false;
+    const weddingMusic = document.getElementById('weddingMusic');
+    let isPlaying = false;
+    
+    musicPlayer.addEventListener('click', () => {
+      if (isPlaying) {
+        weddingMusic.pause();
         musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
-      });
-  }
-
-  // Логика клика по иконке тоже оставляем
-  musicPlayer.addEventListener('click', () => {
-    if (isPlaying) {
-      weddingMusic.pause();
-      musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
-    } else {
-      weddingMusic.play().catch(() => {});
-      musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
-    }
-    isPlaying = !isPlaying;
-  });
+      } else {
+        weddingMusic.play().catch(e => {
+          console.log("Автовоспроизведение заблокировано. Нажмите на кнопку еще раз.");
+        });
+        musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
+      }
+      isPlaying = !isPlaying;
+    });
     
     // Попробуем запустить музыку автоматически при загрузке
     window.addEventListener('DOMContentLoaded', () => {
@@ -349,7 +330,7 @@
       isPlaying = true;
       musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
     }
-
+    
   </script>
 </body>
 </html>
