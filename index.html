@@ -290,13 +290,26 @@
     
     // Form submission
     document.querySelector('.rsvp-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const name = this.querySelector('input[type="text"]').value;
-      const attendance = this.querySelector('input[name="attendance"]:checked').nextElementSibling.textContent;
-      
-      alert(`Рақмет, ${name}! Сіздің қатысуыңыздың мәліметі: ${attendance}. Біз сізді тойымызда көргенімізге қуаныштымыз!`);
-      this.reset();
-    });
+  e.preventDefault();
+  
+  const name = this.querySelector('input[type="text"]').value;
+  const attendance = this.querySelector('input[name="attendance"]:checked').nextElementSibling.textContent;
+  
+  fetch('https://script.google.com/macros/s/AKfycbx_mKJX0atgWflalC4oCLKLUnAwqXNNPz2enL2mMd8d0PW769w5IVu63Xxxg11kdbpb/exec', {
+    method: 'POST',
+    body: JSON.stringify({ name, attendance }),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(`Рақмет, ${name}! Сіздің қатысуыңыздың мәліметі: ${attendance}`);
+    this.reset();
+  })
+  .catch(err => {
+    console.error(err);
+    alert('Қате орын алды. Қайта байқап көріңіз.');
+  });
+});
 
 
     function hideIntro() {
