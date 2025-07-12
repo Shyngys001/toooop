@@ -40,7 +40,8 @@
     <div class="down-arrow">⌄</div>
     
 
-    <!-- Центрированный вниз-стрелочный индикатор -->
+    <!-- Центрированный вниз-стрелочный и
+     ндикатор -->
     <div class="invitation-card">
       <h2 class="section-title">Құрметті қонақтар!</h2>
       
@@ -232,33 +233,38 @@
   <script>
     // Музыкальный плеер
     const musicPlayer = document.getElementById('musicPlayer');
-    const weddingMusic = document.getElementById('weddingMusic');
-    let isPlaying = false;
-    
-    musicPlayer.addEventListener('click', () => {
-      if (isPlaying) {
-        weddingMusic.pause();
-        musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
-      } else {
-        weddingMusic.play().catch(e => {
-          console.log("Автовоспроизведение заблокировано. Нажмите на кнопку еще раз.");
-        });
-        musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
-      }
-      isPlaying = !isPlaying;
+  const weddingMusic = document.getElementById('weddingMusic');
+  let isPlaying = false;
+
+  // Обычная логика иконки плеера
+  musicPlayer.addEventListener('click', () => {
+    if (isPlaying) {
+      weddingMusic.pause();
+      musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
+    } else {
+      weddingMusic.play().catch(() => {});
+      musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
+    }
+    isPlaying = !isPlaying;
+  });
+
+  // Скрываем оверлей и запускаем музыку
+  function hideIntro() {
+    // 1) Скрываем оверлей
+    document.getElementById('introOverlay').style.display = 'none';
+
+    // 2) Запускаем музыку
+    weddingMusic.play().then(() => {
+      isPlaying = true;
+      musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
+    }).catch(e => {
+      console.warn('Автовоспроизведение заблокировано браузером');
+      // оставляем иконку «play» на кнопке
+      isPlaying = false;
+      musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
     });
-    
-    // Попробуем запустить музыку автоматически при загрузке
-    window.addEventListener('DOMContentLoaded', () => {
-      weddingMusic.play().then(() => {
-        isPlaying = true;
-        musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
-      }).catch(e => {
-        // Автовоспроизведение заблокировано, оставляем кнопку воспроизведения
-        console.log("Автовоспроизведение заблокировано. Пользователь должен запустить музыку вручную.");
-      });
-    });
-    
+  }
+
     // Countdown timer
     const weddingDate = new Date("2025-08-18T17:00:00");
     
@@ -324,14 +330,6 @@
         submitButton.disabled = false;
       });
     });
-
-    function hideIntro() {
-      document.getElementById('introOverlay').style.display = 'none';
-      const weddingMusic = document.getElementById('weddingMusic');
-      weddingMusic.play();
-      isPlaying = true;
-      musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
-    }
     
   </script>
 </body>
