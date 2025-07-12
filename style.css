@@ -157,7 +157,7 @@ body::before {
   border: 1px solid rgba(180, 148, 74, 0.2);
   border-radius: 4px;
   padding: 60px 50px;
-  margin: 40px auto;
+  margin: 0px auto;
   max-width: 800px;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
   position: relative;
@@ -702,4 +702,24 @@ footer {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+
+.down-arrow {
+  text-align: center;
+  margin: 50 auto;
+  width: 10px;
+  margin: 0 auto;
+  
+  transform: translate(-50%, -50%);
+  font-size: 4rem;          /* размер стрелки */
+  color: #b4944a;           /* цвет, подберите по палитре */
+  pointer-events: none;     /* чтобы не мешала кликам */
+  animation: bounce 2s infinite;
+}
+
+/* (необязательно) простая анимация «покачивания» вверх-вниз */
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, -45%); }
+  50%      { transform: translate(-50%, -55%); }
 }
