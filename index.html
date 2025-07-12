@@ -690,6 +690,16 @@
   </style>
 </head>
 <body>
+  <div id="introOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.9); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+    <div style="background: white; padding: 10px; border-radius: 12px; max-width: 90vw; max-height: 95vh; text-align: center; box-shadow: 0 0 20px rgba(0,0,0,0.5);">
+      <video id="introVideo" playsinline autoplay muted loop style="max-width: 100%; border-radius: 10px; margin-bottom: 20px;">
+        <source src="IMG_5830.MOV" type="video/mp4">
+        Сіздің браузеріңіз видео көрсетуді қолдамайды.
+      </video>
+      <button onclick="hideIntro()" style="padding: 15px 30px; font-size: 1.2rem; background: #f5f5f5; border: 2px solid #000; border-radius: 8px; cursor: pointer;">Шақыртуды ашу</button>
+    </div>
+  </div>
+
   <div class="gold-overlay"></div>
   
 <!-- Music Player -->
@@ -719,7 +729,7 @@
       <h2 class="section-title">Құрметті қонақтар!</h2>
       
       <p class="invitation-text">
-        Сіздерді ұлымыз бен келініміз Ерасыл мен Айдананың үйлену тойына арналған жайылған ақ дастарханымыздың қадірлі қонағы болуға шақырамыз!
+        Сіздерді ұлымыз Ерасыл мен келініміз Айдананың үйлену тойына арналған жайылған ақ дастарханымыздың қадірлі қонағы болуға шақырамыз!
       </p>
       
       <div class="event-details">
@@ -739,12 +749,49 @@
           <p class="detail-content">17:00</p>
         </div>
         
+        <div class="countdown">
+          <div class="countdown-item">
+            <div class="countdown-number" id="days">00</div>
+            <div class="countdown-label">Күн</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-number" id="hours">00</div>
+            <div class="countdown-label">Сағат</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-number" id="minutes">00</div>
+            <div class="countdown-label">Минут</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-number" id="seconds">00</div>
+            <div class="countdown-label">Секунд</div>
+          </div>
+        </div>
+        
         <div class="detail-box">
           <div class="detail-icon">
             <i class="fas fa-map-marker-alt"></i>
           </div>
           <h3 class="detail-title">Орыны</h3>
           <p class="detail-content">"Altyn auyl"</p>
+        </div>
+      </div>
+      <div class="map-section">
+        <h2 class="section-title">Мекен жайымыз</h2>
+        
+        <div class="map-container">
+          <div class="map-placeholder">
+            <div class="map-overlay">
+              <h3 class="map-title">"Altyn auyl" Мейрамханасы</h3>
+              <p class="address">
+                Алматы облысы, Қаскелең қаласы,<br>
+                Абылай хан көшесі, 1а/5
+              </p>
+              <a href="https://2gis.kz/almaty/geo/70000001094196506" target="_blank" class="btn">
+                <i class="fas fa-map-marked-alt"></i> Навигатор
+              </a>
+            </div>
+          </div>
         </div>
       </div>
       
@@ -819,46 +866,12 @@
       </div>
     </div>
     
-    <div class="countdown">
-      <div class="countdown-item">
-        <div class="countdown-number" id="days">00</div>
-        <div class="countdown-label">Күн</div>
-      </div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="hours">00</div>
-        <div class="countdown-label">Сағат</div>
-      </div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="minutes">00</div>
-        <div class="countdown-label">Минут</div>
-      </div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="seconds">00</div>
-        <div class="countdown-label">Секунд</div>
-      </div>
-    </div>
+  
     
-    <div class="map-section">
-      <h2 class="section-title">Мекен жайымыз</h2>
-      
-      <div class="map-container">
-        <div class="map-placeholder">
-          <div class="map-overlay">
-            <h3 class="map-title">"Altyn auyl" Мейрамханасы</h3>
-            <p class="address">
-              Алматы облысы, Қаскелең қаласы,<br>
-              Абылай хан көшесі, 1а/5
-            </p>
-            <a href="https://2gis.kz/almaty/geo/70000001094196506" target="_blank" class="btn">
-              <i class="fas fa-map-marked-alt"></i> Навигатор
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+   
     
     <div class="rsvp-section">
-      <h2 class="section-title">Тойға келетініңізді растаңыз</h2>
+      <h2 class="section-title">Тойға келетініңізді растау</h2>
       <p style="font-size: 1.2rem; margin-bottom: 20px; color: #7a6350;">
         Тойға келетініңізді растауыңызды өтінеміз
       </p>
@@ -970,6 +983,11 @@
       alert(`Рақмет, ${name}! Сіздің қатысуыңыздың мәліметі: ${attendance}. Біз сізді тойымызда көргенімізге қуаныштымыз!`);
       this.reset();
     });
+
+
+    function hideIntro() {
+    document.getElementById('introOverlay').style.display = 'none';
+  }
   </script>
 </body>
 </html>
