@@ -687,3 +687,19 @@ footer {
   .btn { padding: 10px 25px; }
   .footer-text { font-size: 1.3rem; }
 }
+
+.loader {
+  display: none;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #b4944a;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -230,21 +230,40 @@
   <script>
     // Музыкальный плеер
     const musicPlayer = document.getElementById('musicPlayer');
-    const weddingMusic = document.getElementById('weddingMusic');
-    let isPlaying = false;
-    
-    musicPlayer.addEventListener('click', () => {
-      if (isPlaying) {
-        weddingMusic.pause();
-        musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
-      } else {
-        weddingMusic.play().catch(e => {
-          console.log("Автовоспроизведение заблокировано. Нажмите на кнопку еще раз.");
-        });
+  const weddingMusic = document.getElementById('weddingMusic');
+  let isPlaying = false;
+
+  // Скрываем оверлей и запускаем музыку
+  function hideIntro() {
+    // 1) прячем оверлей
+    document.getElementById('introOverlay').style.display = 'none';
+
+    // 2) пытаемся запустить музыку
+    weddingMusic.play()
+      .then(() => {
+        // Если успешно — обновляем иконку
+        isPlaying = true;
         musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
-      }
-      isPlaying = !isPlaying;
-    });
+      })
+      .catch(e => {
+        // Если автоплей заблокирован — просто поставим иконку Play
+        console.warn('Автовоспроизведение заблокировано');
+        isPlaying = false;
+        musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
+      });
+  }
+
+  // Логика клика по иконке тоже оставляем
+  musicPlayer.addEventListener('click', () => {
+    if (isPlaying) {
+      weddingMusic.pause();
+      musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
+    } else {
+      weddingMusic.play().catch(() => {});
+      musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
+    }
+    isPlaying = !isPlaying;
+  });
     
     // Попробуем запустить музыку автоматически при загрузке
     window.addEventListener('DOMContentLoaded', () => {
@@ -288,32 +307,49 @@
     // Update every second
     setInterval(updateCountdown, 1000);
     
-    // Form submission
+    // Исправленная функция отправки данных
     document.querySelector('.rsvp-form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const name = this.querySelector('input[name="name"]').value;
-  const attendance = this.querySelector('input[name="attendance"]:checked').value;
-  
-  fetch('https://script.google.com/macros/s/AKfycbzBw3vQsMy2iuVIshOZU8oN-nCHFpLyibqqsgPbh5fqusR-hXK7C88fJk7x_9f9z2Th/exec', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ name, attendance })
-})
-  .then(res => res.json())
-  .then(data => {
-    alert(`Рақмет, ${name}! Сіздің қатысуыңыздың мәліметі: ${attendance}`);
-    this.reset();
-  })
-  .catch(err => {
-    console.error(err);
-    alert('Қате орын алды. Қайта байқап көріңіз.');
-  });
-});
+      e.preventDefault();
+      
+      const name = this.querySelector('input[name="name"]').value;
+      const attendance = this.querySelector('input[name="attendance"]:checked').value;
+      
+      // Показать индикатор загрузки
+      const submitButton = this.querySelector('button[type="submit"]');
+      const originalButtonText = submitButton.innerHTML;
+      submitButton.innerHTML = '<div class="loader"></div> Жіберілуде...';
+      submitButton.disabled = true;
+      
+      // Формируем URL с параметрами
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbz9KAW8Wo4vbbR5a1jrxZIcMrTta2bYvZ9ZbyafIeILk5dfZ6-Pivr58KSA-nYcIiIv/exec';
+      const url = `${scriptURL}?name=${encodeURIComponent(name)}&attendance=${encodeURIComponent(attendance)}`;
+      
+      fetch(url, { 
+        method: 'GET',
+        mode: 'no-cors' // Важно для обхода CORS
+      })
+      .then(() => {
+        alert(`Рақмет, ${name}! Сіздің қатысуыңыздың мәліметі: ${attendance}`);
+        this.reset();
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Қате орын алды. Қайта байқап көріңіз.');
+      })
+      .finally(() => {
+        submitButton.innerHTML = originalButtonText;
+        submitButton.disabled = false;
+      });
+    });
 
     function hideIntro() {
-    document.getElementById('introOverlay').style.display = 'none';
-  }
+      document.getElementById('introOverlay').style.display = 'none';
+      const weddingMusic = document.getElementById('weddingMusic');
+      weddingMusic.play();
+      isPlaying = true;
+      musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
+    }
+
   </script>
 </body>
 </html>
